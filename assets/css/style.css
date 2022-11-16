@@ -27,3 +27,25 @@ nav {
     border-color: black;
 }
 
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.allWeather {
+    width: 75%;
+    display: none;
+}
+
+
+
+.currentWeather {
+    border: 2px solid black;
+    border-radius: 10px;
+    text-align: center
+}
+
+.currentWeather h4 {
+    font-size: ;
+}

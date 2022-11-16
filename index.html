@@ -11,30 +11,32 @@
 
 
 <body>
-    <nav>
-        <h1>Weather Dashboard</h1>
-    </nav>
-    <div class="searchContainer">
-        <h1>Search for a City: </h1>
-        <form class="form" action="">
-            <input class="userInput" placeholder="City Name" name="userInput"></input>
-            <button class="button" id="searchButton">Search</button>
-            <div id="history" class="historyContainer"></div>
-        </form>
-    </div>
+    <header>
+        <nav>
+            <h1>Weather Dashboard</h1>
+        </nav>
+    </header>
+    <main class="main">
+        <div class="searchContainer">
+            <h1>Search for a City: </h1>
+            <form class="form" action="">
+                <input class="userInput" placeholder="City Name" name="userInput"></input>
+                <button class="button" id="searchButton">Search</button>
+                <div id="history" class="historyContainer"></div>
+            </form>
+        </div>
+        <div class="allWeather">
+            <h2>Current Weather</h2>
+            <div class="currentWeather">
+                
+            </div>
+            <h2>5 Day Forecast:</h2>
+            <div id="forecast" class="forecast"></div>
 
-
-
+        </div>
+    </main>
     
-    <div class="displayContainer">
-        <div class="currentWeather"></div>
-        <div id="forecast" class="Forecast"></div>
-    </div>
-
-
-
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
