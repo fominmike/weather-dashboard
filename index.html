@@ -8,22 +8,28 @@
     <title>Weather Dashboard</title>
 </head>
 
-<nav>
-    <h1>Weather Dashboard</h1>
-</nav>
+
+
 <body>
+    <nav>
+        <h1>Weather Dashboard</h1>
+    </nav>
+    <div class="searchContainer">
+        <h1>Search for a City: </h1>
+        <form class="form" action="">
+            <input class="userInput" placeholder="City Name" name="userInput"></input>
+            <button class="button" id="searchButton">Search</button>
+            <div id="history" class="historyContainer"></div>
+        </form>
+    </div>
+
+
+
     
-
-
-
-
-
-
-
-
-
-
-
+    <div class="displayContainer">
+        <div class="currentWeather"></div>
+        <div id="forecast" class="Forecast"></div>
+    </div>
 
 
 

@@ -1,0 +1,29 @@
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: cornflowerblue;
+    color: white;
+    padding: 2px;
+}
+
+.userInput {
+    padding: 13px 58.3px;
+    border-radius: 6px;
+}
+
+.button {
+    margin-top: 10px;
+    display: block;
+    padding: 10px 110px;
+    background-color: cornflowerblue;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    border-color: cornflowerblue;
+}
+
+.button:hover {
+    background-color:black;
+    border-color: black;
+}
+
