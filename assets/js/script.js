@@ -7,8 +7,6 @@ var allInfo = document.querySelector('.allWeather')
 var currentBox = document.querySelector('.currentWeather')
 
 
-
-
 function getCurrentWeather(e) {
     e.preventDefault()
     
@@ -69,10 +67,36 @@ function getWeatherForcast(e) {
         return response.json()
     }) 
      .then(function(data){
+        renderResults(data)
         console.log(data)
          })
 }
 
+function renderResults(data) {
+    var forecast = document.querySelector('.forecast')
+    
+    for( var i = 7; i < data.list.length; i+=8) {
+        var card = document.createElement('div')
+        var icon = data.list[i].weather[0].icon
+        var iconUrl = "http://openweathermap.org/img/w/" + icon + ".png"
+        var tempinF = Math.round(1.8*(data.list[i].main.temp-273)+32)
+        var unixDate = (data.list[i].dt) * 1000
+        var dateString = moment(unixDate).format('MM/DD/YYYY')
+        var windSpeed = Math.ceil(data.list[i].wind.speed * 2.23)
+        var content = `
+        <div class='card border-dark' id='cards'>
+            <div>
+                    <p class="date1">${dateString}</p>
+                    <img src="${iconUrl}">
+                    <p class="temp1">Temp: ${tempinF} °F</p>
+                    <p class="wind1">Wind: ${windSpeed} MPH</p>
+                    <p class="humid1">Humidity: ${data.list[i].main.humidity} %</p>
+            </div>
+        </div>`
+        card.innerHTML = content
+        forecast.appendChild(card)
+    }
+}
 
 searchButton.addEventListener('click', getCurrentWeather)
 searchButton.addEventListener('click', getWeatherForcast)

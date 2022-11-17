@@ -7,7 +7,7 @@ nav {
 }
 
 .userInput {
-    padding: 13px 58.3px;
+    padding: 13px 47.5px;
     border-radius: 6px;
 }
 
@@ -38,14 +38,21 @@ nav {
     display: none;
 }
 
-
-
 .currentWeather {
     border: 2px solid black;
     border-radius: 10px;
-    text-align: center
+    text-align: center;
 }
 
-.currentWeather h4 {
-    font-size: ;
+ .forecast {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly; 
+}
+
+#cards {
+    background-color: rgb(53, 53, 87);
+    padding-left: 5px;
+    padding-right: 30px;
+    color: white;
 }
