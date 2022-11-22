@@ -6,7 +6,8 @@ var apiKey = '9cfe7036b90b3a13af1a88f6bf534b32'
 var allInfo = document.querySelector('.allWeather')
 var currentBox = document.querySelector('.currentWeather')
 
-
+var searchHis = document.getElementById('history')
+//functions
 function getCurrentWeather(e) {
     e.preventDefault()
     
@@ -96,8 +97,16 @@ function renderResults(data) {
         card.innerHTML = content
         forecast.appendChild(card)
     }
+    returnInput()
+}
+
+function returnInput() {
+    var userInput = document.querySelector('.userInput').value
+    
+    var button1 = document.createElement('button')
+    button1.textContent = userInput 
+    searchHis.appendChild(button1)
 }
 
 searchButton.addEventListener('click', getCurrentWeather)
 searchButton.addEventListener('click', getWeatherForcast)
-

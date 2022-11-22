@@ -1,7 +1,7 @@
 nav {
     display: flex;
     justify-content: center;
-    background-color: cornflowerblue;
+    background-color: rgb(45, 0, 70);
     color: white;
     padding: 2px;
 }
@@ -55,4 +55,10 @@ nav {
     padding-left: 5px;
     padding-right: 30px;
     color: white;
+}
+
+.historyContainer {
+    display: flex;
+    margin-top: 20px;
+    margin-left: 70px;
 }
