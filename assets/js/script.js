@@ -7,10 +7,14 @@ var allInfo = document.querySelector('.allWeather')
 var currentBox = document.querySelector('.currentWeather')
 
 var searchHis = document.getElementById('history')
+
+var searchedCities = []
 //functions
 function getCurrentWeather(e) {
-    e.preventDefault()
+    // e.preventDefault()
     
+    currentBox.innerHTML = '';
+
     var userInput = document.querySelector('.userInput').value
     
     var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${userInput}&appid=${apiKey}`
@@ -57,7 +61,9 @@ function getCurrentWeather(e) {
 
 function getWeatherForcast(e) {
     e.preventDefault()
-
+     
+    forecast.innerHTML = ''
+    
     var userInput = document.querySelector('.userInput').value
 
     var requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${userInput}&appid=${apiKey}`
@@ -69,7 +75,9 @@ function getWeatherForcast(e) {
     }) 
      .then(function(data){
         renderResults(data)
+        appendHis(userInput)
         console.log(data)
+        
          })
 }
 
@@ -100,13 +108,114 @@ function renderResults(data) {
     returnInput()
 }
 
-function returnInput() {
-    var userInput = document.querySelector('.userInput').value
-    
-    var button1 = document.createElement('button')
-    button1.textContent = userInput 
-    searchHis.appendChild(button1)
+function appendHis(userInput) {
+    if (searchedCities.indexOf(userInput)!==-1) {
+        return 
+    }
+    searchedCities.push(userInput)
+    localStorage.setItem('search-his', JSON.stringify(searchedCities))
+    returnInput()
 }
 
+function setUpSearch() {
+    var getSearch = localStorage.getItem('search-his')
+    if (getSearch) {
+        searchedCities = JSON.parse(getSearch)
+    }
+    returnInput()
+}
+
+function returnInput() {
+    searchHis.innerHTML = '';
+    for(var i = searchedCities.length -1; i >= 0; i--) {
+        var button1 = document.createElement('button')
+        button1.setAttribute('aria-controls', 'currentWeather forecast')
+        button1.setAttribute('type', 'button')
+        button1.classList.add('historyButton', 'button-history')
+        button1.setAttribute('storage-search', searchedCities[i])
+        button1.textContent = searchedCities[i]
+        searchHis.appendChild(button1)
+    
+        
+    }
+}
+
+function historySearch(city) {
+    currentBox.innerHTML = '';
+
+    var userInput = city
+
+    var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${userInput}&appid=${apiKey}`
+    
+    allInfo.style.display = 'block'
+
+    fetch(requestUrl)
+    .then(function(response) {
+        return response.json()
+    }) 
+     .then(function(data){
+
+        var date = moment().format("MMM Do YY");
+        var name = data.name
+        var date1 = document.createElement('h3')
+        date1.textContent = name + ` ${date}` 
+        currentBox.appendChild(date1)
+
+        var icon = data.weather[0].icon
+        var iconurl = "http://openweathermap.org/img/w/" + icon + ".png"
+        var img = document.createElement('img')
+        img.setAttribute('src', iconurl)
+        img.setAttribute('alt', 'weatherIcon')
+        currentBox.appendChild(img)
+
+        var temp = Math.floor((data.main.temp - 273.15) * 1.8 + 32)
+        newP = document.createElement('p')
+        newP.textContent = 'Temperature: ' + temp + '°F'
+        currentBox.appendChild(newP)
+
+        var wind = data.wind.speed
+        var conversion = Math.ceil(wind * 2.237)
+        newP1 = document.createElement('p')
+        newP1.textContent = 'Wind Speed: ' + conversion + ' MPH'
+        currentBox.appendChild(newP1)
+
+        var humidity = data.main.humidity
+        newP2 = document.createElement('p')
+        newP2.textContent = 'Humidity: ' + humidity + ' %'
+        currentBox.appendChild(newP2)
+        })
+}
+
+function historyForecast(city) {
+    forecast.innerHTML = ''
+    
+    var userInput = city
+
+    var requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${userInput}&appid=${apiKey}`
+
+    fetch(requestUrl)
+    .then(function(response) {
+        return response.json()
+    }) 
+     .then(function(data){
+        renderResults(data)
+        appendHis(userInput)
+         })
+}
+
+function handleHistoryClick(e) {
+    if(!e.target.matches('.button-history')) {
+        return
+    }
+    var button = e.target
+    var userInput = button.getAttribute('storage-search')
+    historySearch(userInput)
+    historyForecast(userInput)
+}
+
+setUpSearch()
 searchButton.addEventListener('click', getCurrentWeather)
 searchButton.addEventListener('click', getWeatherForcast)
+searchHis.addEventListener('click', handleHistoryClick)
+
+
